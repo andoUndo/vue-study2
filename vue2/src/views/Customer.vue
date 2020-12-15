@@ -20,27 +20,27 @@
       
       <!-- 年の入力 -->
       <select v-model="birthday.year">
-        <option v-for="nextYear in dates.years" :key="nextYear">
+        <option v-for="nextYear in years" :key="nextYear">
           {{ nextYear }}
         </option>
       </select>
-      {{ dateStr.yearStr }}
+      {{ '年' }}
 
       <!-- 月の入力 -->
       <select v-model="birthday.month">
-        <option v-for="nextMonth in dates.months" :key="nextMonth">
+        <option v-for="nextMonth in months" :key="nextMonth">
           {{ nextMonth }}
         </option>
       </select>
-      {{ dateStr.monthStr }}
+      {{ '月' }}
 
       <!-- 日の入力 -->
       <select v-model="birthday.day">
-        <option v-for="nextDay in dates.days" :key="nextDay">
+        <option v-for="nextDay in days" :key="nextDay">
           {{ nextDay }}
         </option>
       </select>
-      {{ dateStr.dayStr }}
+      {{ '日' }}
     </div>
 
     <router-link to="/questionnaire"><button>次へ進む</button></router-link>
@@ -48,45 +48,27 @@
 </template>
 
 <script>
+import dates from '@/externals/definition.js'
+
 export default {
   data: function() {
       return {
         // 性別を格納する変数
         gender: '',
-        // 日付を表示するための配列オブジェクト
-        dates: {
-          years: [],
-          months: [],
-          days: []
-        },
-        // 日付に年月日の単位を付与するための変数
-        dateStr: {
-          yearStr: '年', 
-          monthStr: '月',
-          dayStr: '日'
-        },
-        // ユーザーの入力した誕生日を格納する変数
+
+        // ユーザーの誕生日を格納するオブジェクト
         birthday: {
           year: '',
           month: '',
           day: ''
-        }
+        },
+
+        // セレクトボックスに表示する年月日の値を、それぞれ取得する
+        years: dates.getYears(),
+        months: dates.getMonths(),
+        days: dates.getDays()
       }
-    },
-  created() {
-    // 生年月日の「年」の数値を、1950年から2000年まで作成する
-    for(let i = 1950; i <= 2000; i++) {
-      this.dates.years.push(i);
     }
-    // 生年月日の「月」の数値を、1月から12月まで作成する
-    for(let i = 1; i <= 12; i++) {
-      this.dates.months.push(i);
-    }
-    // 生年月日の「日」の数値を、1日から31日まで作成する
-    for(let i = 1; i <= 31; i++) {
-      this.dates.days.push(i);
-    }
-  }
 }
 </script>
 
